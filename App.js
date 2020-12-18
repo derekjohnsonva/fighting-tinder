@@ -1,6 +1,5 @@
-import { Font, Icon } from 'expo'
-import { AppLoading} from 'expo-app-loading'
-import { Asset } from 'expo-asset'
+import AppLoading from 'expo-app-loading'
+import * as Font from 'expo-font';
 import React from 'react'
 import { StatusBar, StyleSheet, View } from 'react-native'
 import AppNavigator from './navigation/AppNavigator'
@@ -14,7 +13,7 @@ export default class App extends React.Component {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
-          startAsync={this._loadResourcesAsync}
+          startAsync={this._fetchFonts}
           onError={this._handleLoadingError}
           onFinish={this._handleFinishLoading}
         />
@@ -27,33 +26,37 @@ export default class App extends React.Component {
         </View>
       )
     }
-  }
-
-  _loadResourcesAsync = async () => {
-    return Promise.all([
-      Asset.loadAsync([
-        require('./assets/images/splash.png'),
-        require('./assets/images/icon.png'),
-      ]),
-      Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Icon.MaterialIcons.font,
-        ...Icon.MaterialCommunityIcons.font,
-        ...Icon.FontAwesome.font,
-        ...Icon.Feather.font,
-      }),
-    ])
-  }
+  };
+  // _loadResourcesAsync = async () => {
+  //   return Promise.all([
+  //     Asset.loadAsync([
+  //       require('./assets/images/splash.png'),
+  //       require('./assets/images/icon.png'),
+  //     ]),
+  //     Font.loadAsync({
+  //       // This is the font that we are using for our tab bar
+  //       ...Icon.MaterialIcons.font,
+  //       ...Icon.MaterialCommunityIcons.font,
+  //       ...Icon.FontAwesome.font,
+  //       ...Icon.Feather.font,
+  //     }),
+  //   ])
+  // };
 
   _handleLoadingError = error => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error)
-  }
+  };
 
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true })
-  }
+  };
+  _fetchFonts = () => {
+    return Font.loadAsync({
+      "space-mono": require('./assets/fonts/SpaceMono-Regular.ttf'),
+    });
+  };
 }
 
 const styles = StyleSheet.create({
@@ -61,4 +64,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-})
+});

@@ -11,7 +11,8 @@ class HomeScreen extends React.Component {
         <Swiper
           cards={HomeScreenPics}
           renderCard={Card}
-          infinite
+          // infinite
+          disableTopSwipe={true}
           backgroundColor="white"
           cardHorizontalMargin={0}
           stackSize={2}
